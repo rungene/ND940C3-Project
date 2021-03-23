@@ -15,9 +15,9 @@
     <string name="glide_button_text">Glide - Image Loading Library by BumbTech</string>
     <string name="loadapp_button_text">LoadApp - Current repository by Udacity</string>
     <string name="retrofit_button_text">Retrofit - Type-safe HTTP client for Android and Java by Square, Inc</string>
-    <string name="download_channel_id" translatable="false">Load App Channel</string>
-    <string name="download_channel_name" translatable="true">Download Status</string>
-    <string name="download_channel_description">Download status notifications (complete or fail.)</string>
+    <string name="download_channel_id" translatable="false">Download Channel</string>
+    <string name="download_channel_name" translatable="true">Download</string>
+    <string name="download_channel_description">Status of download  notifications (complete or fail.)</string>
     <string name="notification_action_details">Check Status</string>
     <string name="filename_label">File name</string>
     <string name="status_label">Status</string>

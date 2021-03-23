@@ -1,13 +1,16 @@
 package com.udacity
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
@@ -39,6 +42,47 @@ class MainActivity : AppCompatActivity() {
         custom_button.setOnClickListener {
             download()
         }
+
+        //   create channel for download notification
+        createChannel(
+                getString(R.string.download_channel_id),
+                getString(R.string.download_channel_name)
+        )
+
+
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+
+        //  Step 1.6 START create a channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                    channelId,
+                    channelName,
+                    //  Step 2.4 change importance
+                    NotificationManager.IMPORTANCE_HIGH
+            )//  Step 2.6 disable badges for this channel
+                    .apply {
+                        setShowBadge(false)
+                    }
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.download_channel_description)
+
+            // Register the channel with the system
+
+
+            val notificationManager = this.getSystemService(
+                    NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+
+        }
+        //  Step 1.6 END create a channel
     }
 
     private val receiver = object : BroadcastReceiver() {
