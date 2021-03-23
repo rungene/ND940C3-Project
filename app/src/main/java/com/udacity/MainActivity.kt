@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fileName: String
 
     private lateinit var notificationManager: NotificationManager
+
     private lateinit var pendingIntent: PendingIntent
     private lateinit var action: NotificationCompat.Action
 
@@ -48,6 +50,16 @@ class MainActivity : AppCompatActivity() {
                 getString(R.string.download_channel_id),
                 getString(R.string.download_channel_name)
         )
+
+         // Initialize the notification manager
+        // NotificationManager is a system service which provides all the functions exposed
+    // for notifications api
+        notificationManager =ContextCompat.getSystemService(
+                applicationContext,
+                NotificationManager::class.java
+        ) as NotificationManager
+
+
 
 
     }
