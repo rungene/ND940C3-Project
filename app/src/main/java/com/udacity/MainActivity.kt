@@ -17,6 +17,7 @@ import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.udacity.util.sendNotification
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -104,10 +105,12 @@ class MainActivity : AppCompatActivity() {
             if (id ==downloadID){
                 //reset download button state and stop the animation
                 customButton.buttonState =ButtonState.Completed
+                notificationManager.sendNotification(downloadURL.toString(),applicationContext,"Success")
 
 
-
-
+            }else{
+                customButton.buttonState =ButtonState.Completed
+                notificationManager.sendNotification(downloadURL.toString(),applicationContext,"Failed")
             }
 
 
