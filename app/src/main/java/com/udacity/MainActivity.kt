@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.content_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var customButton: LoadingButton
 
     private var downloadID: Long = 0
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
-
+        customButton = findViewById(R.id.custom_button)
         custom_button.setOnClickListener {
             download()
         }
@@ -100,6 +101,16 @@ class MainActivity : AppCompatActivity() {
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (id ==downloadID){
+                //reset download button state and stop the animation
+                customButton.buttonState =ButtonState.Completed
+
+
+
+
+            }
+
+
         }
     }
 
