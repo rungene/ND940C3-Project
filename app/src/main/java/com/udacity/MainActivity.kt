@@ -62,9 +62,41 @@ class MainActivity : AppCompatActivity() {
         ) as NotificationManager
 
 
+    }
+
+    fun onRadioButtonClicked(view: View) {
+        if(view is RadioButton){
+            //check if the radio button is checked
+            val checked = view.isChecked
+
+            //check which radio button was checked
+            when(view.id){
+                R.id.glide_button->
+                    if (checked){
+                        fileName = getString(R.string.glide_button_text)
+                        downloadURL = URL_GLIDE
+                    }
+
+                R.id.loadapp_button->
+                    if (checked){
+                        fileName = getString(R.string.loadapp_button_text)
+                        downloadURL = URL_LOAD_APP
+                    }
+                R.id.retrofit_button->
+                    if (checked){
+                        fileName = getString(R.string.retrofit_button_text)
+                        downloadURL = URL_RETROFIT
+                    }
+
+
+            }
+
+        }
 
 
     }
+
+
 
     private fun createChannel(channelId: String, channelName: String) {
         // Create the NotificationChannel, but only on API 26+ because
@@ -140,36 +172,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun onRadioButtonClicked(view: View) {
-        if(view is RadioButton){
-            //check if the radio button is checked
-            val checked = view.isChecked
 
-            //check which radio button was checked
-            when(view.id){
-                R.id.glide_button->
-                    if (checked){
-                        fileName = getString(R.string.glide_button_text)
-                        downloadURL = URL_GLIDE
-                    }
-
-                R.id.loadapp_button->
-                    if (checked){
-                        fileName = getString(R.string.loadapp_button_text)
-                        downloadURL = URL_LOAD_APP
-                    }
-                R.id.retrofit_button->
-                    if (checked){
-                        fileName = getString(R.string.retrofit_button_text)
-                        downloadURL = URL_RETROFIT
-                    }
-
-
-            }
-
-        }
-
-
-    }
 
 }
