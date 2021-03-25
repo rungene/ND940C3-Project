@@ -67,6 +67,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/back_button"
+        android:onClick="backButtonClicked"
         android:textColor="@color/white"
         app:layout_constraintHorizontal_weight="0.5"
         app:layout_constraintStart_toStartOf="parent"

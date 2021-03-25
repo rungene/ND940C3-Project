@@ -2,7 +2,9 @@ package com.udacity
 
 import android.app.NotificationManager
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
@@ -14,6 +16,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
+
 
         //intialize notification manager
         notificationManager =ContextCompat.getSystemService(
@@ -30,6 +33,14 @@ class DetailActivity : AppCompatActivity() {
 
 
 
+
     }
+
+    fun backButtonClicked(view: View) {
+        finish()
+
+    }
+
+
 
 }
