@@ -27,6 +27,7 @@ class LoadingButton @JvmOverloads constructor(
     private var InProgress: Float = 0f
     private var endOfProgress: Float = 0f
     private val pathAngle = Path()
+    private val radiusAngle = 50f
     private val rectangleText = Rect()
     private val rectangleLoad = Rect()
     private val rectangleCurve = RectF()
@@ -131,12 +132,15 @@ class LoadingButton @JvmOverloads constructor(
     }
     // Paint object -coloring and styling Text on the Button
     private val paintText = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        //   color = context.getColor(R.color.white)
-        color=colorPrimaryText
-
-        isAntiAlias = true
-        textSize = 40.0f
+        style =Paint.Style.FILL
         textAlign = Paint.Align.CENTER
+        textSize = 40.0f
+        //   color = context.getColor(R.color.white)
+     color=colorPrimaryText
+
+
+        //isAntiAlias = true
+
         typeface = Typeface.create("", Typeface.BOLD)
 
     }
@@ -179,7 +183,7 @@ class LoadingButton @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        canvas?.drawRect(0.0f, 0.0f, widthSize.toFloat(), heightSize.toFloat(), paintButton)
+    /*    canvas?.drawRect(0.0f, 0.0f, widthSize.toFloat(), heightSize.toFloat(), paintButton)
         canvas?.drawRect(0f, 0f, width, heightSize.toFloat(), paintLoadingButton)
 
         val textHeight: Float = paintText.descent() - paintText.ascent()
@@ -193,12 +197,12 @@ class LoadingButton @JvmOverloads constructor(
             0F,
             width,
             true,
-            paintCircle)
+            paintCircle)*/
 
-     /*   canvas?.apply {
+        canvas?.apply {
             save()
             clipPath(pathAngle)
-            drawColor(paintLoadingButton.color)
+            drawColor(paintButton.color)
             paintText.getTextBounds(buttonText, 0, buttonText.length, rectangleText)
             val xText = width / 2f - rectangleText.width() / 2f
             val yText = height / 2f + rectangleText.height() / 2f - rectangleText.bottom
@@ -219,7 +223,7 @@ class LoadingButton @JvmOverloads constructor(
 
             drawText(buttonText, xText - offsetText, yText, paintText)
             restore()
-        }*/
+        }
 
     }
 
@@ -235,6 +239,22 @@ class LoadingButton @JvmOverloads constructor(
         heightSize = h
         setMeasuredDimension(w, h)
     }
+
+    override fun onSizeChanged(width: Int, height: Int, widthOld: Int, heightOld: Int) {
+        super.onSizeChanged(width, height, widthOld, heightOld)
+        pathAngle.reset()
+        pathAngle.addRoundRect(
+            0f,
+            0f,
+            width.toFloat(),
+            height.toFloat(),
+            radiusAngle,
+            radiusAngle,
+            Path.Direction.CW
+        )
+        pathAngle.close()
+    }
+
 
     private fun settingAnimation() {
         valuesAnimator.cancel()
