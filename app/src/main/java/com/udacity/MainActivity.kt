@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             val checked = view.isChecked
 
             //check which radio button was checked
+            customButton.buttonState = ButtonState.Clicked
             when(view.id){
                 R.id.glide_button->
                     if (checked){
@@ -87,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                         fileName = getString(R.string.retrofit_button_text)
                         downloadURL = URL_RETROFIT
                     }
+
 
 
             }
@@ -150,17 +153,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun download() {
-        val request =
-            DownloadManager.Request(Uri.parse(downloadURL))
-                .setTitle(getString(R.string.app_name))
-                .setDescription(getString(R.string.app_description))
-                .setRequiresCharging(false)
-                .setAllowedOverMetered(true)
-                .setAllowedOverRoaming(true)
 
-        val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        downloadID =
-            downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+        if (downloadURL ==null){
+            Toast.makeText(this,"Please select an item",Toast.LENGTH_LONG).show()
+        }else{
+            customButton.buttonState =ButtonState.Loading
+
+            val request =
+                DownloadManager.Request(Uri.parse(downloadURL))
+                    .setTitle(getString(R.string.app_name))
+                    .setDescription(getString(R.string.app_description))
+                    .setRequiresCharging(false)
+                    .setAllowedOverMetered(true)
+                    .setAllowedOverRoaming(true)
+
+            val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+            downloadID =
+                downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+        }
+        custom_button.addingButtonProgress(0.05f)
+
     }
 
     companion object {
