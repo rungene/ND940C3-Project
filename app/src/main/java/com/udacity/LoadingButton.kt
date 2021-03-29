@@ -41,8 +41,9 @@ class LoadingButton @JvmOverloads constructor(
         when(new) {
 
             ButtonState.Loading -> {
-                SettingColorBacgroundOfButton(colorPrimaryBackground)
-                /* paintCircle.color = context.getColor(R.color.colorAccent)
+                if (old != ButtonState.Loading) {
+                    SettingColorBacgroundOfButton(colorPrimaryBackground)
+                    /* paintCircle.color = context.getColor(R.color.colorAccent)
                 valueAnimator = ValueAnimator.ofFloat(0.0f,
                          measuredWidth.toFloat())
                          .setDuration(2000)
@@ -57,7 +58,8 @@ class LoadingButton @JvmOverloads constructor(
                              }
                          }
                  valueAnimator.start()*/
-                settingAnimation()
+                    settingAnimation()
+                }
             }
 
             ButtonState.Completed -> {
@@ -72,21 +74,12 @@ class LoadingButton @JvmOverloads constructor(
 
             }
         }
-
+        invalidate()
+        requestLayout()
     }
 
-    private fun settingProgressOfButton(floatProgress: Float) {
-        if (InProgress < floatProgress){
 
-            endOfProgress = floatProgress
-            settingAnimation()
-        }
-    }
-    fun addingButtonProgress(floatProgress: Float) {
-        // if (InProgress < 0.64f){
-        settingProgressOfButton(InProgress + floatProgress)
-        // }
-    }
+
 
 
     init {
@@ -170,35 +163,32 @@ class LoadingButton @JvmOverloads constructor(
 
  /*   private var valueAnimator = ValueAnimator()*/
 
-    var value = 0.0f
+  /*  var value = 0.0f
     var width = 0.0f
-    var sweepAngle = 0.0f
+    var sweepAngle = 0.0f*/
 
 
 
+    fun settingProgressOfButton(floatProgress: Float) {
+        if (InProgress < floatProgress){
 
+            endOfProgress = floatProgress
+            settingAnimation()
+        }
+    }
+
+
+
+    fun addingButtonProgress(floatProgress: Float) {
+        // if (InProgress < 0.64f){
+        settingProgressOfButton(InProgress + floatProgress)
+        // }
+    }
 
 
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
-    /*    canvas?.drawRect(0.0f, 0.0f, widthSize.toFloat(), heightSize.toFloat(), paintButton)
-        canvas?.drawRect(0f, 0f, width, heightSize.toFloat(), paintLoadingButton)
-
-        val textHeight: Float = paintText.descent() - paintText.ascent()
-        val textOffset: Float = textHeight / 2 - paintText.descent()
-        canvas?.drawText(buttonText, widthSize.toFloat() / 2.0f, heightSize.toFloat() / 2.0f + textOffset, paintText)
-
-        canvas?.drawArc(widthSize - 145f,
-            heightSize / 2 - 35f,
-            widthSize - 75f,
-            heightSize / 2 + 35f,
-            0F,
-            width,
-            true,
-            paintCircle)*/
-
         canvas?.apply {
             save()
             clipPath(pathAngle)
@@ -216,7 +206,7 @@ class LoadingButton @JvmOverloads constructor(
                 val startOfCurveY = height / 2f - 19
                 rectangleCurve.set(startOfCurveX, startOfCurveY, startOfCurveX + 38, startOfCurveY + 38)
                 drawArc(
-                    rectangleCurve, InProgress, InProgress * 360f, true, colorCurveInprogress
+                    rectangleCurve, InProgress, InProgress * 360f, true, paintCircle
                 )
                 offsetText = 36
             }
@@ -224,7 +214,9 @@ class LoadingButton @JvmOverloads constructor(
             drawText(buttonText, xText - offsetText, yText, paintText)
             restore()
         }
-
+  /*      if (canvas != null) {
+            canvas.drawCircle(widthSize/2F, heightSize/2F,radiusAngle,paintCircle)
+        }*/
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

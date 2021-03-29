@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import com.udacity.util.sendNotification
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import androidx.lifecycle.Observer
 
 
 class MainActivity : AppCompatActivity() {
@@ -170,8 +171,21 @@ class MainActivity : AppCompatActivity() {
             val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
             downloadID =
                 downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+
+            val processingLoadingData = ProcessingLoadingData(application, downloadID)
+            processingLoadingData.observe(this, Observer {
+                var floatProgress = ((it.loadedInTimeBt * 100L) / it.sizeOfFileInBt).toFloat()
+                if (it.sizeOfFileInBt != (-1).toLong()){
+                    floatProgress = (floatProgress / 100)
+                    custom_button.settingProgressOfButton(floatProgress)
+                }else if (it.loadedInTimeBt > 1) {
+                    custom_button.addingButtonProgress(0.05f)
+                }
+
+            })
         }
-        custom_button.addingButtonProgress(0.05f)
+
+
 
     }
 
